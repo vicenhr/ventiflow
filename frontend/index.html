@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VentiFlow - Inicio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        body {
+            background-color: #0c3339;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .ventiflow-logo {
+            background-color: #2ccb74;
+            color: white;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+        }
+
+        .module-card {
+            background-color: rgba(255, 255, 255, 0.95);
+            border: none;
+            border-radius: 12px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(44, 203, 116, 0.4) !important;
+            color: #0c3339;
+        }
+
+        .module-icon {
+            font-size: 2.5rem;
+            color: #0c3339;
+        }
+    </style>
+</head>
+
+<body class="d-flex flex-column vh-100">
+
+    <header class="d-flex justify-content-between align-items-center px-4 py-3 bg-white shadow-sm mb-auto">
+        <a class="d-flex align-items-center gap-2 fw-bold text-dark text-decoration-none" href="index.html">
+            <div class="ventiflow-logo fs-4 fw-bold">⚡</div>
+            <span class="fs-5">VentiFlow</span>
+        </a>
+        <div class="d-flex align-items-center gap-2 fw-bold text-secondary text-uppercase" style="font-size: 0.85rem;">
+            <span id="nombreUsuarioNav">Cargando...</span>
+            <i class="bi bi-box-arrow-right logout-icon text-danger fs-4 ms-2" style="cursor: pointer;" title="Cerrar Sesión"></i>
+        </div>
+    </header>
+
+    <main class="container my-auto py-5">
+        <div class="text-center text-white mb-5">
+            <h1 class="fw-bold mb-2">¡Bienvenido!</h1>
+            <p class="opacity-75">Selecciona el módulo correspondiente a tus actividades de hoy</p>
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 justify-content-center">
+
+            <div class="col">
+                <a href="pages/pos.html" class="card h-100 p-4 text-center module-card shadow-sm">
+                    <div class="mb-3"><span class="module-icon">💵</span></div>
+                    <h4 class="fw-bold mb-2">Caja</h4>
+                    <p class="text-muted small mb-0">Registro y cobro de pedidos, asignación de turnos y vinculación de
+                        clientes.</p>
+                </a>
+            </div>
+
+            <div class="col">
+                <a href="pages/cocina.html" class="card h-100 p-4 text-center module-card shadow-sm">
+                    <div class="mb-3"><span class="module-icon">🍴</span></div>
+                    <h4 class="fw-bold mb-2">Cocina</h4>
+                    <p class="text-muted small mb-0">Monitor de producción de alimentos en cola con alertas de tiempos
+                        límite.</p>
+                </a>
+            </div>
+
+            <div class="col">
+                <a href="pages/barra.html" class="card h-100 p-4 text-center module-card shadow-sm">
+                    <div class="mb-3"><span class="module-icon">☕</span></div>
+                    <h4 class="fw-bold mb-2">Barra</h4>
+                    <p class="text-muted small mb-0">Gestión visual y control en tiempo real para la preparación de
+                        bebidas y cafés.</p>
+                </a>
+            </div>
+
+            <div class="col">
+                <a href="pages/clientes.html" class="card h-100 p-4 text-center module-card shadow-sm">
+                    <div class="mb-3"><span class="module-icon">👤</span></div>
+                    <h4 class="fw-bold mb-2">Clientes y Lealtad</h4>
+                    <p class="text-muted small mb-0">Búsqueda de cuentas de cliente frecuente y altas al programa de
+                        acumulación de puntos.</p>
+                </a>
+            </div>
+
+            <div class="col">
+                <a href="pages/admin.html" class="card h-100 p-4 text-center module-card shadow-sm">
+                    <div class="mb-3"><span class="module-icon">📊</span></div>
+                    <h4 class="fw-bold mb-2">Admin Dashboard</h4>
+                    <p class="text-muted small mb-0">Análisis de métricas comerciales, auditorías de historial de ventas
+                        y reportes agregados.</p>
+                </a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="text-center py-3 text-white-50 mt-auto"
+        style="font-size: 0.85rem; background-color: rgba(0,0,0,0.1);">
+        VentiFlow Interno — Uso exclusivo para personal autorizado de la cafetería.
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/seguridad.js"></script>
+</body>
+
+</html>
