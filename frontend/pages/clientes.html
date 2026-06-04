@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VentiFlow - Clientes</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        body { background-color: #f0f2f5; }
+        .ventiflow-logo { background-color: #2ccb74; color: white; width: 32px; height: 32px; display: flex; justify-content: center; align-items: center; border-radius: 6px; }
+        .nav-link.active-tab { background-color: #e6f7ed; color: #1e8449 !important; }
+        .btn-dark-blue { background-color: #1a252f; color: white; }
+        .btn-dark-blue:hover { background-color: #2c3e50; color: white; }
+        .card-green { background-color: #27ae60; color: white; }
+        .btn-dark-green { background-color: #1e8449; color: white; border: none; }
+        .btn-dark-green:hover { background-color: #145a32; color: white; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg bg-white shadow-sm px-4 py-3">
+    <div class="container-fluid">
+        <a class="navbar-brand d-flex align-items-center gap-2 fw-bold text-dark" href="../index.html">
+            <div class="ventiflow-logo fs-5">⚡</div> VentiFlow
+        </a>
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0 align-items-center gap-1 fw-medium text-secondary">
+            <li class="nav-item"><a class="nav-link text-secondary px-3" href="pos.html">Caja/POS</a></li>
+            <li class="nav-item"><a class="nav-link text-secondary px-3" href="cocina.html">Cocina</a></li>
+            <li class="nav-item"><a class="nav-link text-secondary px-3" href="barra.html">Barra</a></li>
+            <li class="nav-item"><a class="nav-link active-tab fw-bold px-3 rounded" href="clientes.html">Clientes</a></li>
+            <li class="nav-item"><a class="nav-link text-secondary px-3" href="admin.html">Admin</a></li>
+            <li class="nav-item ms-3"><a class="nav-link fw-bold text-primary" href="turnos.html" target="_blank">Abrir Pantalla Pública ⧉</a></li>
+        </ul>
+        <div class="d-flex align-items-center gap-2 fw-bold text-secondary text-uppercase" style="font-size: 0.85rem;">
+            <span id="nombreUsuarioNav">Cargando...</span>
+            <i class="bi bi-box-arrow-right logout-icon text-danger fs-4 ms-2" style="cursor: pointer;" title="Cerrar Sesión"></i>
+        </div>
+    </div>
+</nav>
+
+<main class="container mt-5 d-flex flex-column align-items-center">
+
+    <div class="card border-0 shadow-sm p-4 w-100" style="max-width: 650px; border-radius: 10px;">
+        <h2 class="fs-4 fw-bold text-dark mb-4">Programa de Lealtad</h2>
+        <div class="d-flex gap-3">
+            <div class="input-group">
+                <span class="input-group-text bg-white border-end-0 text-muted ps-3">📞</span>
+                <input type="tel" id="telefono" class="form-control border-start-0 ps-1 py-2" placeholder="Número de Teléfono..." maxlength="10">
+            </div>
+            <button id="btnBuscar" class="btn btn-dark-blue fw-bold px-4">Buscar</button>
+        </div>
+    </div>
+
+    <div class="card card-green border-0 shadow-lg p-4 w-100 mt-4" id="tarjetaCliente" style="max-width: 650px; border-radius: 10px; display: none;">
+        <div class="row align-items-center g-0">
+            <div class="col-auto pe-4">
+                <div class="rounded-circle border border-3 border-white d-flex justify-content-center align-items-center" style="width: 80px; height: 80px; font-size: 2.5rem;">
+                    👤
+                </div>
+            </div>
+            <div class="col">
+                <h3 id="nombreCliente" class="fs-3 fw-bold mb-1">Cargando...</h3>
+                <p id="telCliente" class="mb-3 opacity-75">+52 --</p>
+                <p class="mb-0 small opacity-75">Puntos Acumulados</p>
+                <p class="mb-0 fw-bold" style="font-size: 2rem; line-height: 1;"><span id="puntosCliente">0</span> <span class="fs-5 fw-normal">pts</span></p>
+            </div>
+            <div class="col-auto d-flex flex-column gap-2">
+                <button class="btn btn-light fw-bold text-success px-4 py-2" id="btnAplicarDescuento">Aplicar Descuento</button>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<div class="modal fade" id="registroModal" tabindex="-1" aria-labelledby="registroModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 10px;">
+            <div class="modal-header border-bottom-0 pb-0">
+                <h5 class="modal-title fw-bold text-dark" id="registroModalLabel">✨ Nuevo Cliente</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-muted small mb-4">El número no está registrado. Ingresa su nombre para crear su cuenta de lealtad y comenzar a acumular puntos.</p>
+                <div class="mb-3">
+                    <label class="form-label text-secondary small fw-medium">Número de Teléfono</label>
+                    <input type="text" id="telefonoRegistro" class="form-control text-muted bg-light" readonly>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label text-secondary small fw-medium">Nombre o Alias</label>
+                    <input type="text" id="nombreRegistro" class="form-control" placeholder="Ej. Juan Pérez" required>
+                </div>
+            </div>
+            <div class="modal-footer border-top-0 pt-0">
+                <button type="button" class="btn btn-light text-secondary fw-bold" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" id="btnGuardarCliente" class="btn btn-dark-green fw-bold px-4">Registrar Cliente</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalDescuento" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content border-0 shadow-lg text-center" style="border-radius: 15px;">
+            <div class="modal-body p-4">
+                <div class="mb-3 mt-2"><span class="fs-1">🎁</span></div>
+                <h4 class="fw-bold text-dark mb-1">Recompensa Disponible</h4>
+                <p class="text-muted small mb-4">Equivalencia de lealtad</p>
+                
+                <div class="bg-light rounded-3 p-3 mb-4 border border-2 border-success border-opacity-25">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-secondary fw-bold">Puntos Totales:</span>
+                        <span class="fw-bold text-dark" id="modalPuntos">0 pts</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-2 pt-2 border-top">
+                        <span class="text-secondary fw-bold">A favor:</span>
+                        <span class="fw-bold text-success fs-4" id="modalDinero">$0.00 MXN</span>
+                    </div>
+                </div>
+                
+                <button type="button" class="btn btn-success w-100 py-2 fw-bold" data-bs-dismiss="modal">Entendido</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/seguridad.js"></script>
+<script src="../js/lealtad.js"></script>
+</body>
+</html>

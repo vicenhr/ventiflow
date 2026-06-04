@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VentiFlow - Pantalla Pública de Turnos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <style>
+        body { 
+            background-color: #0a0f16; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            color: white; 
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .tv-navbar {
+            background-color: #121824;
+            border-bottom: 2px solid #1e293b;
+            padding: 10px 30px;
+        }
+
+        .scroll-column {
+            height: calc(100vh - 130px);
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .scroll-column::-webkit-scrollbar { width: 8px; }
+        .scroll-column::-webkit-scrollbar-track { background: transparent; }
+        .scroll-column::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+
+        .col-pendiente { background-color: #0f172a; border-right: 2px solid #1e293b; }
+        .col-preparando { background-color: #17120e; border-right: 2px solid #1e293b; }
+        .col-listo { background-color: #0b2b26; }
+
+        .col-title {
+            text-align: center;
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px dashed rgba(255,255,255,0.1);
+        }
+
+        .tarjeta-turno {
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            font-size: 2.5rem; 
+            font-weight: bold;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .tarjeta-pendiente { 
+            background-color: #1e293b; 
+            color: #94a3b8; 
+            border-left: 8px solid #64748b;
+        }
+        
+        .tarjeta-preparando { 
+            background-color: #2b1d0f; 
+            color: #fbd38d; 
+            border-left: 8px solid #f59e0b;
+        }
+        
+        .tarjeta-listo { 
+            background-color: #e6f7ed; 
+            color: #1e8449; 
+            font-size: 2.25rem; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-left: 12px solid #2ccb74;
+            animation: parpadeo 1.5s ease-in-out infinite; 
+        }
+        
+        .badge-listo { 
+            background-color: #a7f3d0; 
+            color: #065f46; 
+            font-size: 1.25rem; 
+            padding: 10px 25px; 
+            border-radius: 10px; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-banner { 
+            background-color: #11111a; 
+            color: #2ccb74; 
+            padding: 12px; 
+            text-align: center; 
+            font-size: 1.1rem; 
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        @keyframes parpadeo {
+            0% { transform: scale(1); box-shadow: 0 0 10px rgba(44, 203, 116, 0.2); }
+            50% { transform: scale(1.02); box-shadow: 0 0 30px rgba(44, 203, 116, 0.6); }
+            100% { transform: scale(1); box-shadow: 0 0 10px rgba(44, 203, 116, 0.2); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="overlay-interaccion" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #0a0f16; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+        <span class="fs-1 mb-3">⚡</span>
+        <h1 class="text-white fw-bold mb-3">VentiFlow Pantalla Pública</h1>
+        <p class="text-secondary mb-4 fs-5">Haz clic en el botón para activar el sistema y el sonido</p>
+        <button id="btn-iniciar" class="btn btn-success btn-lg px-5 py-3 fs-4 fw-bold">
+            <i class="bi bi-play-fill me-2"></i> Iniciar Pantalla
+        </button>
+    </div>
+
+    <header class="tv-navbar d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center gap-3">
+            <span class="fs-3">⚡</span>
+            <h4 class="m-0 fw-bold text-white">VentiFlow <span class="fw-light text-secondary">| Pantalla Pública</span></h4>
+        </div>
+        <div>
+            <a href="../index.html" class="btn btn-outline-secondary btn-sm fw-bold">
+                <i class="bi bi-arrow-left me-2"></i>Volver al Panel
+            </a>
+        </div>
+    </header>
+
+    <main class="row m-0 flex-grow-1">
+        
+        <div class="col-4 col-pendiente p-0">
+            <div class="scroll-column">
+                <h3 class="col-title text-secondary">ESPERA</h3>
+                <div id="contenedorPendientes" class="d-flex flex-column gap-3">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-4 col-preparando p-0">
+            <div class="scroll-column">
+                <h3 class="col-title text-warning">PREPARANDO</h3>
+                <div id="contenedorPreparando" class="d-flex flex-column gap-3">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-4 col-listo p-0">
+            <div class="scroll-column">
+                <h3 class="col-title text-success">ENTREGA</h3>
+                <div id="contenedorListos" class="d-flex flex-column gap-3">
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="footer-banner">
+        ♦ ¡Prueba nuestro nuevo Frappé de Temporada! ♦ Pregunta por nuestro programa de cliente frecuente en caja ♦
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="../js/turnos.js"></script>
+</body>
+</html>
