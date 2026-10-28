@@ -17,6 +17,7 @@ public class Categoria {
     private Long idCategoria;
     @Column(name = "nombre_categoria")
     private String nombreCategoria;
+    @Enumerated(EnumType.STRING)
     @Column(name = "area_preparacion")
-    private String areaPreparacion;
+    private AreaPreparacion areaPreparacion;
 }

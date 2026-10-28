@@ -14,7 +14,7 @@ public record DatosProducto(
                 producto.getIdProducto(),
                 producto.getNombre(),
                 producto.getPrecio(),
-                producto.getCategoria().getAreaPreparacion(),
+                producto.getCategoria().getAreaPreparacion().getValor(),
                 producto.getCategoria().getIdCategoria()
         );
     }
