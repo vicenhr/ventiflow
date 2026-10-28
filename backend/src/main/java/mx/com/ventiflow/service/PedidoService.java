@@ -83,12 +83,12 @@ public class PedidoService {
             detallePedidoRepository.save(detalle);
             totalCalculado = totalCalculado.add(subtotal);
 
-            String area = producto.getCategoria().getAreaPreparacion();
+            String area = producto.getCategoria().getAreaPreparacion().getValor();
             DatosDetalleKds kdsDetalle = new DatosDetalleKds(producto.getIdProducto(), producto.getNombre(), detalleDTO.cantidad());
 
-            if ("Barra".equalsIgnoreCase(area)) {
+            if ("BARRA".equalsIgnoreCase(area)) {
                 detallesBarra.add(kdsDetalle);
-            } else if ("Cocina".equalsIgnoreCase(area)) {
+            } else if ("COCINA".equalsIgnoreCase(area)) {
                 detallesCocina.add(kdsDetalle);
             }
         }
@@ -222,7 +222,7 @@ public class PedidoService {
         return pedidos.stream().map(pedido -> {
             // Filtrar los detalles para que la pantalla solo vean productos
             List<DatosDetalleKds> detallesFiltrados = pedido.getDetalles().stream()
-                    .filter(d -> d.getProducto().getCategoria().getAreaPreparacion().equalsIgnoreCase(area))
+                    .filter(d -> d.getProducto().getCategoria().getAreaPreparacion().getValor().equalsIgnoreCase(area))
                     .map(d -> new DatosDetalleKds(d.getProducto().getIdProducto(), d.getProducto().getNombre(), d.getCantidad()))
                     .toList();
 

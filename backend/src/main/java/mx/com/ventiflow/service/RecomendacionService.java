@@ -27,9 +27,9 @@ public class RecomendacionService {
             String area = (String) resultado[0];
             Long cantidad = (Long) resultado[1];
 
-            if ("Barra".equalsIgnoreCase(area)) {
+            if ("BARRA".equalsIgnoreCase(area)) {
                 itemsEnBarra = cantidad.intValue();
-            } else if ("Cocina".equalsIgnoreCase(area)) {
+            } else if ("COCINA".equalsIgnoreCase(area)) {
                 itemsEnCocina = cantidad.intValue();
             }
         }

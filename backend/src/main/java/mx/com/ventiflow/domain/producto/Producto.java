@@ -26,5 +26,5 @@ public class Producto {
     @Column(name = "precio_unitario")
     private BigDecimal precio;
     @Column(name = "estado_disponibilidad")
-    private Boolean estado;
+    private Boolean estado; // borrado lógico
 }
