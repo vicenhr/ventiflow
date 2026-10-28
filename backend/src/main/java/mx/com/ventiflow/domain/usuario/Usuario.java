@@ -3,7 +3,7 @@ package mx.com.ventiflow.domain.usuario;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Table(name = "Usuarios")
+@Table(name = "usuarios")
 @Entity(name = "Usuario")
 @Getter
 @Setter
