@@ -26,13 +26,13 @@ public class AuthController {
         if (usuarioOpt.isPresent()) {
             Usuario usuario = usuarioOpt.get();
 
-            // Validación directa de la contraseña
-            if (usuario.getClave().equals(datos.clave())) {
+            // TODO(fase-2): reemplazar por PasswordEncoder.matches() con BCrypt y JWT real
+            if (usuario.getClaveHash().equals(datos.clave())) {
 
                 // Token simulado
                 String tokenSimulado = UUID.randomUUID().toString();
 
-                DatosRespuestaAuth respuesta = new DatosRespuestaAuth(tokenSimulado, usuario.getRol(), usuario.getNombre());
+                DatosRespuestaAuth respuesta = new DatosRespuestaAuth(tokenSimulado, usuario.getRol().name(), usuario.getNombre());
                 return ResponseEntity.ok(respuesta); // Retorna 200 OK con el JSON
             }
         }

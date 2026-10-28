@@ -16,6 +16,8 @@ public class Usuario {
     @Column(name = "id_usuario")
     private Long idUsuario;
     private String nombre;
-    private String rol;
-    private String clave;
+    @Enumerated(EnumType.STRING)
+    private Rol rol;
+    @Column(name = "clave_hash")
+    private String claveHash;
 }
