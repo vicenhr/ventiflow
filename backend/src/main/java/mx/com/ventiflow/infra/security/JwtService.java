@@ -1,5 +1,7 @@
 package mx.com.ventiflow.infra.security;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import mx.com.ventiflow.domain.usuario.Usuario;
@@ -31,5 +33,21 @@ public class JwtService {
                 .issuedAt(Date.from(ahora))
                 .signWith(llave)
                 .compact();
+    }
+
+    public Claims leerClaims(String token) {
+        return Jwts.parser()
+                .verifyWith(llave)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+    }
+
+    public String obtenerNombre(String token) {
+        return leerClaims(token).getSubject();
+    }
+
+    public String obtenerRol(String token) {
+        return leerClaims(token).get("rol", String.class);
     }
 }
