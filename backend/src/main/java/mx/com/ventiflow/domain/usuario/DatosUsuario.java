@@ -1,7 +1,9 @@
 package mx.com.ventiflow.domain.usuario;
 
+import jakarta.validation.constraints.NotBlank;
+
 public record DatosUsuario(
-        String usuario,
-        String clave
+        @NotBlank String usuario,
+        @NotBlank String clave
 ) {
 }

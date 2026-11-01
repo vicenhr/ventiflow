@@ -1,42 +1,21 @@
 package mx.com.ventiflow.controller;
 
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import mx.com.ventiflow.domain.usuario.DatosUsuario;
-import mx.com.ventiflow.domain.usuario.Usuario;
-import mx.com.ventiflow.domain.usuario.UsuarioRepository;
+import mx.com.ventiflow.infra.security.AuthService;
 import mx.com.ventiflow.infra.security.DatosRespuestaAuth;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-import java.util.UUID;
-
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/v1/auth")
 public class AuthController {
-
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final AuthService login;
 
     @PostMapping("/login")
-    public ResponseEntity<?> autenticarUsuario(@RequestBody DatosUsuario datos) {
-        Optional<Usuario> usuarioOpt = usuarioRepository.findByNombre(datos.usuario());
-
-        if (usuarioOpt.isPresent()) {
-            Usuario usuario = usuarioOpt.get();
-
-            // TODO(fase-2): reemplazar por PasswordEncoder.matches() con BCrypt y JWT real
-            if (usuario.getClaveHash().equals(datos.clave())) {
-
-                // Token simulado
-                String tokenSimulado = UUID.randomUUID().toString();
-
-                DatosRespuestaAuth respuesta = new DatosRespuestaAuth(tokenSimulado, usuario.getRol().name(), usuario.getNombre());
-                return ResponseEntity.ok(respuesta); // Retorna 200 OK con el JSON
-            }
-        }
-
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas"); // Retorna 401
+    public ResponseEntity<DatosRespuestaAuth> autenticarUsuario(@Valid @RequestBody DatosUsuario datos) {
+        return ResponseEntity.ok(login.autenticar(datos));
     }
 }
