@@ -38,6 +38,7 @@ public class SecurityConfig{
                         .requestMatchers(HttpMethod.PATCH, "/api/v1/pedidos/{idPedido}/estado").hasAnyRole("COCINA", "BARRA", "CAJA", "ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/v1/metricas").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/v1/pedidos/{idPedido}/cancelar").hasRole("ADMIN")
+                        .requestMatchers("/ws-ventiflow/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
